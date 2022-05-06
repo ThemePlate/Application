@@ -1,0 +1,24 @@
+{
+	"name": "themeplate/application",
+	"description": "For building a modern WordPress site",
+	"license": "GPL-3.0-only",
+	"authors": [
+		{
+			"name": "Gene Alyson Fortunado Torcende",
+			"email": "genealyson.torcende@gmail.com"
+		}
+	],
+	"require": {
+		"php": "^7.4|^8.0",
+		"oscarotero/env": "^2.1",
+		"vlucas/phpdotenv": "^5.4"
+	},
+	"suggest": {
+		"roots/wordpress": "^5.9"
+	},
+	"autoload": {
+		"psr-4": {
+			"ThemePlate\\": "src"
+		}
+	}
+}
