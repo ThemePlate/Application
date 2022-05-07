@@ -44,8 +44,8 @@ class Application {
 		// Debugging Settings
 		define( 'WP_DEBUG', Env::get( 'WP_DEBUG' ) ?: false );
 		define( 'WP_DEBUG_LOG', Env::get( 'WP_DEBUG_LOG' ) ?? true );
-		define( 'WP_DEBUG_DISPLAY', false );
-		define( 'SCRIPT_DEBUG', false );
+		define( 'WP_DEBUG_DISPLAY', Env::get( 'WP_DEBUG_DISPLAY' ) ?: false );
+		define( 'SCRIPT_DEBUG', Env::get( 'SCRIPT_DEBUG' ) ?: false );
 
 		/**
 		 * Custom Settings
@@ -53,18 +53,20 @@ class Application {
 		define( 'WP_HOME', Env::get( 'WP_HOME' ) );
 
 		// Opinionated defaults
-		define( 'WP_SITEURL', WP_HOME . '/wp' );
-		define( 'CONTENT_DIR', '/content' );
-		define( 'WP_CONTENT_DIR', $base_path . CONTENT_DIR );
-		define( 'WP_CONTENT_URL', WP_HOME . CONTENT_DIR );
+		define( 'WP_ROOT_DIR', Env::get( 'WP_ROOT_DIR' ) ?? '/wp' );
+		define( 'CONTENT_DIR', Env::get( 'CONTENT_DIR' ) ?? '/content' );
+
+		define( 'WP_SITEURL', Env::get( 'WP_SITEURL' ) ?: WP_HOME . WP_ROOT_DIR );
+		define( 'WP_CONTENT_DIR', Env::get( 'WP_CONTENT_DIR' ) ?: $base_path . CONTENT_DIR );
+		define( 'WP_CONTENT_URL', Env::get( 'WP_CONTENT_URL' ) ?: WP_HOME . CONTENT_DIR );
 
 		define( 'WP_ENVIRONMENT_TYPE', Env::get( 'WP_ENVIRONMENT_TYPE' ) ?: 'local' );
 		define( 'WP_DEFAULT_THEME', Env::get( 'WP_DEFAULT_THEME' ) ?? '' );
 
-		define( 'AUTOMATIC_UPDATER_DISABLED', true );
+		define( 'AUTOMATIC_UPDATER_DISABLED', Env::get( 'AUTOMATIC_UPDATER_DISABLED' ) ?: true );
 		define( 'DISABLE_WP_CRON', Env::get( 'DISABLE_WP_CRON' ) ?: false );
-		define( 'DISALLOW_FILE_EDIT', true );
-		define( 'DISALLOW_FILE_MODS', true );
+		define( 'DISALLOW_FILE_EDIT', Env::get( 'DISALLOW_FILE_EDIT' ) ?: true );
+		define( 'DISALLOW_FILE_MODS', Env::get( 'DISALLOW_FILE_MODS' ) ?: true );
 
 		/**
 		 * Behind load balancers or reverse proxies that support HTTP_X_FORWARDED_PROTO
@@ -76,7 +78,7 @@ class Application {
 
 		/** Absolute path to the WordPress directory. */
 		if ( ! defined( 'ABSPATH' ) ) {
-			define( 'ABSPATH', $base_path . '/wp' );
+			define( 'ABSPATH', $base_path . WP_ROOT_DIR );
 		}
 
 	}
