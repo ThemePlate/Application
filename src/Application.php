@@ -20,9 +20,21 @@ class Application extends Container {
 		$dotenv = Dotenv::createImmutable( $base_path );
 
 		$dotenv->load();
-		$dotenv->required( 'WP_HOME' );
 
 		Env::$options |= Env::USE_ENV_ARRAY;
+
+		if ( ! defined( 'WPINC' ) ) {
+			$this->bootstrap_wordpress( $dotenv, $base_path );
+		}
+
+		return $this;
+
+	}
+
+
+	protected function bootstrap_wordpress( Dotenv $dotenv, string $base_path ): void {
+
+		$dotenv->required( 'WP_HOME' );
 
 		// Database Settings
 		define( 'DB_NAME', Env::get( 'DB_NAME' ) ?: 'local' );
@@ -81,8 +93,6 @@ class Application extends Container {
 		if ( ! defined( 'ABSPATH' ) ) {
 			define( 'ABSPATH', $base_path . WP_ROOT_DIR );
 		}
-
-		return $this;
 
 	}
 
