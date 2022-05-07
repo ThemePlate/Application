@@ -9,7 +9,7 @@ use Env\Env;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-$application  = new Application( __DIR__ );
+$application  = ( new Application() )->boot( __DIR__ );
 $table_prefix = Env::get( 'DB_PREFIX' ) ?: 'wp_';
 
 require_once ABSPATH . 'wp-settings.php';

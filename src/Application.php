@@ -11,10 +11,11 @@ namespace ThemePlate;
 
 use Dotenv\Dotenv;
 use Env\Env;
+use League\Container\Container;
 
-class Application {
+class Application extends Container {
 
-	public function __construct( string $base_path ) {
+	public function boot( string $base_path ): Application {
 
 		$dotenv = Dotenv::createImmutable( $base_path );
 
@@ -80,6 +81,8 @@ class Application {
 		if ( ! defined( 'ABSPATH' ) ) {
 			define( 'ABSPATH', $base_path . WP_ROOT_DIR );
 		}
+
+		return $this;
 
 	}
 
