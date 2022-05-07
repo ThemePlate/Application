@@ -61,9 +61,17 @@ class Application extends Container {
 		define( 'SCRIPT_DEBUG', Env::get( 'SCRIPT_DEBUG' ) ?: false );
 
 		/**
+		 * Behind load balancers or reverse proxies that support HTTP_X_FORWARDED_PROTO
+		 * See https://developer.wordpress.org/reference/functions/is_ssl
+		 */
+		if ( isset( $_SERVER['HTTP_X_FORWARDED_PROTO'] ) && 'https' === $_SERVER['HTTP_X_FORWARDED_PROTO'] ) {
+			$_SERVER['HTTPS'] = 'on';
+		}
+
+		/**
 		 * Custom Settings
 		 */
-		define( 'WP_HOME', Env::get( 'WP_HOME' ) );
+		define( 'WP_HOME', Env::get( 'WP_HOME' ) ?? $this->targeted_request() );
 
 		// Opinionated defaults
 		define( 'WP_ROOT_DIR', Env::get( 'WP_ROOT_DIR' ) ?? '/wp' );
@@ -81,18 +89,25 @@ class Application extends Container {
 		define( 'DISALLOW_FILE_EDIT', Env::get( 'DISALLOW_FILE_EDIT' ) ?: true );
 		define( 'DISALLOW_FILE_MODS', Env::get( 'DISALLOW_FILE_MODS' ) ?: true );
 
-		/**
-		 * Behind load balancers or reverse proxies that support HTTP_X_FORWARDED_PROTO
-		 * See https://developer.wordpress.org/reference/functions/is_ssl
-		 */
-		if ( isset( $_SERVER['HTTP_X_FORWARDED_PROTO'] ) && 'https' === $_SERVER['HTTP_X_FORWARDED_PROTO'] ) {
-			$_SERVER['HTTPS'] = 'on';
-		}
-
 		/** Absolute path to the WordPress directory. */
 		if ( ! defined( 'ABSPATH' ) ) {
 			define( 'ABSPATH', $base_path . WP_ROOT_DIR );
 		}
+
+	}
+
+
+	protected function targeted_request(): string {
+
+		$protocol = 'http';
+
+		if ( isset( $_SERVER['HTTPS'] ) && in_array( strtolower( $_SERVER['HTTPS'] ), array( '1', 'on' ), true ) ) {
+			$protocol .= 's';
+		} elseif ( isset( $_SERVER['SERVER_PORT'] ) && ( '443' === $_SERVER['SERVER_PORT'] ) ) {
+			$protocol .= 's';
+		}
+
+		return $protocol . '://' . $_SERVER['HTTP_HOST'];
 
 	}
 
