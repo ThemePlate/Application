@@ -19,12 +19,12 @@ class Application extends Container {
 
 		$dotenv = Dotenv::createImmutable( $base_path );
 
-		$dotenv->load();
+		$dotenv->safeLoad();
 
 		Env::$options |= Env::USE_ENV_ARRAY;
 
 		if ( ! defined( 'WPINC' ) ) {
-			$this->bootstrap_wordpress( $dotenv, $base_path );
+			$this->bootstrap_wordpress( $base_path );
 		}
 
 		return $this;
@@ -32,9 +32,7 @@ class Application extends Container {
 	}
 
 
-	protected function bootstrap_wordpress( Dotenv $dotenv, string $base_path ): void {
-
-		$dotenv->required( 'WP_HOME' );
+	protected function bootstrap_wordpress( string $base_path ): void {
 
 		// Database Settings
 		define( 'DB_NAME', Env::get( 'DB_NAME' ) ?: 'local' );

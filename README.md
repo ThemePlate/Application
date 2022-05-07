@@ -17,7 +17,7 @@ require_once ABSPATH . 'wp-settings.php';
 
 ### .env
 ```dotenv
-WP_HOME='https://themeplate.local'
+# WP_HOME='https://themeplate.local'
 # WP_ROOT_DIR='/wp'
 # CONTENT_DIR='/content'
 
