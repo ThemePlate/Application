@@ -85,7 +85,10 @@ class Application extends Container {
 		define( 'AUTOMATIC_UPDATER_DISABLED', Env::get( 'AUTOMATIC_UPDATER_DISABLED' ) ?: true );
 		define( 'DISABLE_WP_CRON', Env::get( 'DISABLE_WP_CRON' ) ?: false );
 		define( 'DISALLOW_FILE_EDIT', Env::get( 'DISALLOW_FILE_EDIT' ) ?: true );
-		define( 'DISALLOW_FILE_MODS', Env::get( 'DISALLOW_FILE_MODS' ) ?: true );
+
+		$disabled_updates = in_array( strtolower( WP_ENVIRONMENT_TYPE ), array( 'staging', 'production' ), true );
+
+		define( 'DISALLOW_FILE_MODS', Env::get( 'DISALLOW_FILE_MODS' ) ?: $disabled_updates );
 
 		$local_config = $base_path . '/wp-config-local.php';
 
