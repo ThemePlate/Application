@@ -87,6 +87,12 @@ class Application extends Container {
 		define( 'DISALLOW_FILE_EDIT', Env::get( 'DISALLOW_FILE_EDIT' ) ?: true );
 		define( 'DISALLOW_FILE_MODS', Env::get( 'DISALLOW_FILE_MODS' ) ?: true );
 
+		$local_config = $base_path . '/wp-config-local.php';
+
+		if ( file_exists( $local_config ) ) {
+			require_once $local_config;
+		}
+
 		/** Absolute path to the WordPress directory. */
 		if ( ! defined( 'ABSPATH' ) ) {
 			define( 'ABSPATH', $base_path . WP_ROOT_DIR );
