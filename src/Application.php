@@ -114,7 +114,7 @@ class Application extends Container {
 			$protocol .= 's';
 		}
 
-		return $protocol . '://' . $_SERVER['HTTP_HOST'];
+		return $protocol . '://' . ( $_SERVER['HTTP_HOST'] ?? 'localhost' );
 
 	}
 
