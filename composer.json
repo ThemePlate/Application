@@ -8,11 +8,24 @@
 			"email": "genealyson.torcende@gmail.com"
 		}
 	],
+	"minimum-stability": "dev",
+	"prefer-stable": true,
+	"config": {
+		"allow-plugins": {
+			"dealerdirect/phpcodesniffer-composer-installer": true
+		},
+		"optimize-autoloader": true,
+		"preferred-install": "dist",
+		"sort-packages": true
+	},
 	"require": {
 		"php": "^7.4|^8.0",
 		"league/container": "^4.2",
 		"oscarotero/env": "^2.1",
 		"vlucas/phpdotenv": "^5.4"
+	},
+	"require-dev": {
+		"themeplate/tester": "^1.1"
 	},
 	"suggest": {
 		"roots/wordpress": "^5.9"
@@ -20,6 +33,11 @@
 	"autoload": {
 		"psr-4": {
 			"ThemePlate\\": "src"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"Tests\\": "tests"
 		}
 	}
 }
