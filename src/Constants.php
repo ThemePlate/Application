@@ -14,7 +14,7 @@ trait Constants {
 	protected static string $default_wp_root_dir = '/wp';
 	protected static string $default_content_dir = '/content';
 	protected static string $default_wp_env_type = 'local';
-	protected static string $default_wp_theme    = '';
+	protected static string $default_wp_theme    = 'themeplate';
 
 
 	protected function get_opinionated_constants(): array {
