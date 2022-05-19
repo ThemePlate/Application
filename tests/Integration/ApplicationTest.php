@@ -20,7 +20,7 @@ class ApplicationTest extends WP_UnitTestCase {
 	public function test_defining_standard_constants_are_skipped_if_wordpress_already_bootstrapped(): void {
 		$this->assertIsString( WPINC );
 
-		$our_default = $this->get_standard_constants();
+		$our_default = $this->get_test_constants();
 
 		// Limited to what we are getting from the testing environment
 		$this->assertIsString( ABSPATH );

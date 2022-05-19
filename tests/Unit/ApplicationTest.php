@@ -7,8 +7,8 @@
 namespace Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
-use Tests\Constants;
 use ThemePlate\Application;
+use ThemePlate\Constants;
 
 class ApplicationTest extends TestCase {
 	use Constants;
@@ -18,8 +18,13 @@ class ApplicationTest extends TestCase {
 	}
 
 	public function test_default_constant_values_loaded_correctly_even_without_dotenv_file(): void {
-		foreach ( $this->get_standard_constants() as $name => $value ) {
-			$this->assertSame( constant( $name ), $value );
+		$constants = $this->get_opinionated_constants() + $this->get_custom_constants( self::$default_base_path );
+
+		foreach ( $constants as $name => $default ) {
+			$value = is_array( $default ) ? $default[0] : $default;
+
+			// "Constant '$name' defaults to '$value'";
+			$this->assertSame( $value, constant( $name ) );
 		}
 	}
 }
