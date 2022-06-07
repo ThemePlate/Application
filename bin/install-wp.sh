@@ -53,7 +53,7 @@ install_wp() {
 		download $DOWNLOAD_URL ${TMPDIR}/${ARCHIVE_NAME}.tar.gz
 	fi
 
-	tar --strip-components=1 -zxmf ${TMPDIR}/${ARCHIVE_NAME}.tar.gz -C $WP_PATH
+	tar --strip-components=1 --exclude=wp-content --exclude=wp-config-sample.php -zxmf ${TMPDIR}/${ARCHIVE_NAME}.tar.gz -C $WP_PATH
 }
 
 install_wp

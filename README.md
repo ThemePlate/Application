@@ -2,6 +2,8 @@
 
 ## Usage
 
+### `./vendor/bin/themeplate install`
+
 ### wp-config.php
 ```php
 use ThemePlate\Application;
