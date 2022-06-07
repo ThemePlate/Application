@@ -15,6 +15,9 @@ use Symfony\Component\Process\Process;
 
 class InstallCommand extends Command {
 
+	use Constants;
+
+
 	// phpcs:disable WordPress.NamingConventions.ValidVariableName.PropertyNotSnakeCase
 	protected static $defaultName        = 'install';
 	protected static $defaultDescription = 'Install WordPress';
@@ -53,7 +56,7 @@ class InstallCommand extends Command {
 
 	protected function get_install_path(): string {
 
-		$default  = 'wordpress'; // phpcs:ignore WordPress.WP.CapitalPDangit.Misspelled
+		$default  = ltrim( self::$default_wp_root_dir, '/\\' );
 		$composer = getcwd() . '/composer.json';
 
 		if ( ! file_exists( $composer ) ) {

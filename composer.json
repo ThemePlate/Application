@@ -28,9 +28,6 @@
 	"require-dev": {
 		"themeplate/tester": "^2.0"
 	},
-	"suggest": {
-		"roots/wordpress": "^5.9"
-	},
 	"autoload": {
 		"psr-4": {
 			"ThemePlate\\": "src"
