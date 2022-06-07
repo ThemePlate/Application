@@ -23,7 +23,7 @@ class InstallCommand extends Command {
 
 	protected function configure(): void {
 
-		$this->addArgument( 'path', InputArgument::OPTIONAL, 'Specify the install path', './wordpress' );
+		$this->addArgument( 'path', InputArgument::OPTIONAL, 'Specify the install path', $this->get_install_path() );
 		$this->addOption( 'tag', null, InputOption::VALUE_OPTIONAL, 'Version tag to install', 'latest' );
 
 	}
@@ -47,6 +47,33 @@ class InstallCommand extends Command {
 		);
 
 		return Command::SUCCESS;
+
+	}
+
+
+	protected function get_install_path(): string {
+
+		$default  = 'wordpress'; // phpcs:ignore WordPress.WP.CapitalPDangit.Misspelled
+		$composer = getcwd() . '/composer.json';
+
+		if ( ! file_exists( $composer ) ) {
+			return $default;
+		}
+
+		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+		$contents = file_get_contents( $composer );
+
+		if ( false === $contents ) {
+			return $default;
+		}
+
+		$decoded = json_decode( $contents, true );
+
+		if ( ! $decoded ) {
+			return $default;
+		}
+
+		return $decoded['extra']['wordpress-install-dir'] ?? $default;
 
 	}
 
