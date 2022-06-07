@@ -18,6 +18,16 @@ class Application extends Container {
 	use Constants;
 
 
+	protected static self $instance;
+
+
+	public static function instance(): Application {
+
+		return self::$instance;
+
+	}
+
+
 	public function boot( string $base_path ): Application {
 
 		$dotenv = Dotenv::createImmutable( $base_path );
@@ -29,6 +39,8 @@ class Application extends Container {
 		if ( ! defined( 'WPINC' ) ) {
 			$this->bootstrap_wordpress( $base_path );
 		}
+
+		self::$instance = $this;
 
 		return $this;
 
