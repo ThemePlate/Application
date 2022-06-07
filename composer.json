@@ -22,10 +22,11 @@
 		"php": "^7.4|^8.0",
 		"league/container": "^4.2",
 		"oscarotero/env": "^2.1",
+		"themeplate/cli": "^0.1.0",
 		"vlucas/phpdotenv": "^5.4"
 	},
 	"require-dev": {
-		"themeplate/tester": "^1.1"
+		"themeplate/tester": "^2.0"
 	},
 	"suggest": {
 		"roots/wordpress": "^5.9"
@@ -33,7 +34,10 @@
 	"autoload": {
 		"psr-4": {
 			"ThemePlate\\": "src"
-		}
+		},
+		"files": [
+			"./commands.php"
+		]
 	},
 	"autoload-dev": {
 		"psr-4": {
