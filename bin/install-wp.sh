@@ -5,6 +5,8 @@ if [ $# -lt 2 ]; then
 	exit 1
 fi
 
+TMPDIR=${TMPDIR-/tmp}
+TMPDIR=$(echo $TMPDIR | sed -e "s/\/$//")
 WP_PATH=$1
 WP_VERSION=${2-latest}
 
