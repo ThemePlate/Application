@@ -50,6 +50,7 @@ trait Constants {
 			'DISABLE_WP_CRON'            => false,
 			'DISALLOW_FILE_EDIT'         => true,
 			'DISALLOW_FILE_MODS'         => $this->is_disabled_updates(),
+			'FS_METHOD'                  => array( 'direct' ),
 		);
 
 	}
