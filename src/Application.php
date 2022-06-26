@@ -72,6 +72,9 @@ class Application extends Container {
 			$_SERVER['HTTPS'] = 'on';
 		}
 
+		// phpcs:ignore WordPress.PHP.IniSet.display_errors_Blacklisted
+		ini_set( 'display_errors', '0' );
+
 		/**
 		 * Custom Settings
 		 */
