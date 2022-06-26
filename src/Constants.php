@@ -71,7 +71,7 @@ trait Constants {
 	}
 
 
-	protected function is_disabled_updates(): bool {
+	public function is_disabled_updates(): bool {
 
 		return in_array( strtolower( WP_ENVIRONMENT_TYPE ), array( 'staging', 'production' ), true );
 
