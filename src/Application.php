@@ -72,6 +72,11 @@ class Application extends Container {
 			$_SERVER['HTTPS'] = 'on';
 		}
 
+		/** With Cloudflare Flexible SSL */
+		if ( isset( $_SERVER['HTTP_CF_VISITOR'] ) && '{"scheme":"https"}' === $_SERVER['HTTP_CF_VISITOR'] ) {
+			$_SERVER['HTTPS'] = 'on';
+		}
+
 		// phpcs:ignore WordPress.PHP.IniSet.display_errors_Blacklisted
 		ini_set( 'display_errors', '0' );
 
