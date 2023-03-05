@@ -88,6 +88,10 @@ trait Constants {
 	 */
 	protected function define( string $constant, $default ): void {
 
+		if ( defined( $constant ) && $default === constant( $constant ) ) {
+			return;
+		}
+
 		if ( is_array( $default ) ) {
 			define( $constant, Env::get( $constant ) ?? $default[0] );
 		} else {
