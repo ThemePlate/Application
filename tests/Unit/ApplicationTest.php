@@ -18,7 +18,11 @@ class ApplicationTest extends TestCase {
 	}
 
 	public function test_default_constant_values_loaded_correctly_even_without_dotenv_file(): void {
-		$constants = $this->get_opinionated_constants() + $this->get_custom_constants( self::$default_base_path );
+		$constants = $this->get_opinionated_constants();
+
+		if ( ! defined( 'WP_TESTS_TABLE_PREFIX' ) ) {
+			$constants += $this->get_custom_constants( self::$default_base_path );
+		}
 
 		foreach ( $constants as $name => $default ) {
 			$value = is_array( $default ) ? $default[0] : $default;

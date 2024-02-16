@@ -12,18 +12,19 @@
 	"prefer-stable": true,
 	"config": {
 		"allow-plugins": {
-			"dealerdirect/phpcodesniffer-composer-installer": true
+			"dealerdirect/phpcodesniffer-composer-installer": true,
+			"phpstan/extension-installer": true
 		},
 		"optimize-autoloader": true,
 		"preferred-install": "dist",
 		"sort-packages": true
 	},
 	"require": {
-		"php": "^7.4|^8.0",
+		"php": "^7.4|^8.2",
 		"ext-json": "*",
 		"league/container": "^4.2",
 		"oscarotero/env": "^2.1",
-		"themeplate/cli": "^0.1.0",
+		"themeplate/cli": "^0.1.0|^1.0",
 		"vlucas/phpdotenv": "^5.4"
 	},
 	"require-dev": {

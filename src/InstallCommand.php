@@ -26,6 +26,10 @@ class InstallCommand extends Command {
 
 	protected function configure(): void {
 
+		// phpcs:disable WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
+		$this->setName( self::$defaultName );
+		$this->setDescription( self::$defaultDescription );
+		// phpcs:enable WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
 		$this->addArgument( 'path', InputArgument::OPTIONAL, 'Specify the install path', $this->get_install_path() );
 		$this->addOption( 'tag', null, InputOption::VALUE_OPTIONAL, 'Version tag to install', 'latest' );
 
