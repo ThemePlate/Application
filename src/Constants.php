@@ -23,7 +23,7 @@ trait Constants {
 			'DB_NAME'             => 'local',
 			'DB_USER'             => 'root',
 			'DB_PASSWORD'         => 'root',
-			'DB_HOST'             => 'localhost',
+			'DB_HOST'             => '127.0.0.1',
 			'DB_CHARSET'          => 'utf8',
 			'DB_COLLATE'          => '',
 			'WP_DEBUG'            => false,
@@ -66,7 +66,7 @@ trait Constants {
 			$protocol .= 's';
 		}
 
-		return $protocol . '://' . ( $_SERVER['HTTP_HOST'] ?? 'localhost' );
+		return $protocol . '://' . ( $_SERVER['HTTP_HOST'] ?? '127.0.0.1' );
 
 	}
 
