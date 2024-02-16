@@ -28,13 +28,20 @@ class Application extends Container {
 	}
 
 
-	public function boot( string $base_path ): Application {
+	public static function load_env( string $path, string $name = null ): void {
 
-		$dotenv = Dotenv::createImmutable( $base_path );
+		$dotenv = Dotenv::createImmutable( $path, $name );
 
 		$dotenv->safeLoad();
 
 		Env::$options |= Env::USE_ENV_ARRAY;
+
+	}
+
+
+	public function boot( string $base_path ): Application {
+
+		self::load_env( $base_path );
 
 		if ( ! defined( 'WPINC' ) ) {
 			$this->bootstrap_wordpress( $base_path );
