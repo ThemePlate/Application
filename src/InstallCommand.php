@@ -40,7 +40,7 @@ class InstallCommand extends Command {
 
 		$args = array(
 			'sh',
-			dirname( __FILE__, 2 ) . '/bin/install-wp.sh',
+			dirname( __DIR__ ) . '/bin/install-wp.sh',
 			$input->getArgument( 'path' ),
 			$input->getOption( 'tag' ),
 		);
