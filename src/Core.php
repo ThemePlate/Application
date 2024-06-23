@@ -39,8 +39,8 @@ class Core {
 
 	protected function __construct( string $base_path ) {
 
-		$public_root = Env::get( 'PUBLIC_ROOT' ) ?? self::DEFAULT['PUBLIC_ROOT'];
-		$wp_core_dir = Env::get( 'WP_CORE_DIR' ) ?? self::DEFAULT['WP_CORE_DIR'];
+		$public_root = Env::get( 'PUBLIC_ROOT' ) ?? self::DEFAULT_VALUE['PUBLIC_ROOT'];
+		$wp_core_dir = Env::get( 'WP_CORE_DIR' ) ?? self::DEFAULT_VALUE['WP_CORE_DIR'];
 
 		$this->public_path = realpath( $this->join_path_parts( $base_path, $public_root ) );
 		$wp_core_real_path = realpath( $this->join_path_parts( $this->public_path, $wp_core_dir ) );
@@ -77,7 +77,7 @@ class Core {
 			$_SERVER['HTTPS'] = 'on';
 		}
 
-		// phpcs:ignore WordPress.PHP.IniSet.display_errors_Blacklisted
+		// phpcs:ignore WordPress.PHP.IniSet.display_errors_Disallowed
 		ini_set( 'display_errors', '0' );
 
 		/**

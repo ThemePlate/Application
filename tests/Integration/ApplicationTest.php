@@ -21,10 +21,10 @@ class ApplicationTest extends WP_UnitTestCase {
 		$this->assertIsString( WPINC );
 
 		$our_default = array(
-			'WP_CONTENT_DIR'   => __DIR__ . self::DEFAULT['CONTENT_DIR'],
-			'WP_CONTENT_URL'   => 'http://localhost/' . self::DEFAULT['CONTENT_DIR'],
-			'WP_DEFAULT_THEME' => self::DEFAULT['THEME_SLUG'],
-			'ABSPATH'          => __DIR__ . self::DEFAULT['WP_CORE_DIR'],
+			'WP_CONTENT_DIR'   => __DIR__ . self::DEFAULT_VALUE['CONTENT_DIR'],
+			'WP_CONTENT_URL'   => 'http://localhost/' . self::DEFAULT_VALUE['CONTENT_DIR'],
+			'WP_DEFAULT_THEME' => self::DEFAULT_VALUE['THEME_SLUG'],
+			'ABSPATH'          => __DIR__ . self::DEFAULT_VALUE['WP_CORE_DIR'],
 		);
 
 		// Limited to what we are getting from the testing environment

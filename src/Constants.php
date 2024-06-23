@@ -10,7 +10,7 @@ use Env\Env;
 
 trait Constants {
 
-	public const DEFAULT = array(
+	public const DEFAULT_VALUE = array(
 		'PUBLIC_ROOT' => 'public',
 		'WP_CORE_DIR' => 'wp',
 		'CONTENT_DIR' => 'content',
@@ -36,8 +36,8 @@ trait Constants {
 			'WP_DEBUG_DISPLAY'    => false,
 			'SCRIPT_DEBUG'        => false,
 			'WP_HOME'             => array( $this->targeted_request() ),
-			'WP_ENVIRONMENT_TYPE' => self::DEFAULT['ENVIRONMENT'],
-			'WP_DEFAULT_THEME'    => array( self::DEFAULT['THEME_SLUG'] ),
+			'WP_ENVIRONMENT_TYPE' => self::DEFAULT_VALUE['ENVIRONMENT'],
+			'WP_DEFAULT_THEME'    => array( self::DEFAULT_VALUE['THEME_SLUG'] ),
 		);
 
 	}
@@ -45,13 +45,16 @@ trait Constants {
 
 	protected function join_path_parts( string ...$args ): string {
 
-		array_walk( $args, function ( string &$part, int $key ) {
-			$part = rtrim( $part, '/\\' );
+		array_walk(
+			$args,
+			function ( string &$part, int $key ) {
+				$part = rtrim( $part, '/\\' );
 
-			if ( $key > 0 ) {
-				$part = ltrim( $part, '/\\' );
+				if ( $key > 0 ) {
+					$part = ltrim( $part, '/\\' );
+				}
 			}
-		} );
+		);
 
 		return implode( DIRECTORY_SEPARATOR, array_filter( $args ) );
 
@@ -60,7 +63,7 @@ trait Constants {
 
 	protected function get_custom_constants( string $wp_core_dir ): array {
 
-		$content_dir = Env::get( 'CONTENT_DIR' ) ?? self::DEFAULT['CONTENT_DIR'];
+		$content_dir = Env::get( 'CONTENT_DIR' ) ?? self::DEFAULT_VALUE['CONTENT_DIR'];
 
 		return array(
 			'WP_SITEURL'                 => $this->join_path_parts( WP_HOME, $wp_core_dir ),
@@ -101,17 +104,17 @@ trait Constants {
 	/**
 	 * If default value is an array, the comparison operator is switched from 'null-coalescing' to 'ternary'
 	 */
-	protected function define( string $constant, mixed $default ): void {
+	protected function define( string $constant, mixed $default_value ): void {
 
-		if ( defined( $constant ) && $default === constant( $constant ) ) {
+		if ( defined( $constant ) && constant( $constant ) === $default_value ) {
 			return;
 		}
 
-		if ( is_array( $default ) ) {
-			define( $constant, Env::get( $constant ) ?? $default[0] );
+		if ( is_array( $default_value ) ) {
+			define( $constant, Env::get( $constant ) ?? $default_value[0] );
 		} else {
-			// phpcs:ignore WordPress.PHP.DisallowShortTernary
-			define( $constant, Env::get( $constant ) ?: $default );
+			// phpcs:ignore Universal.Operators.DisallowShortTernary
+			define( $constant, Env::get( $constant ) ?: $default_value );
 		}
 
 	}
