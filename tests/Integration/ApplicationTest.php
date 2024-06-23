@@ -6,8 +6,8 @@
 
 namespace Tests\Integration;
 
-use Tests\Constants;
 use ThemePlate\Application;
+use ThemePlate\Application\Constants;
 use WP_UnitTestCase;
 
 class ApplicationTest extends WP_UnitTestCase {
@@ -20,7 +20,12 @@ class ApplicationTest extends WP_UnitTestCase {
 	public function test_defining_standard_constants_are_skipped_if_wordpress_already_bootstrapped(): void {
 		$this->assertIsString( WPINC );
 
-		$our_default = $this->get_test_constants();
+		$our_default = array(
+			'WP_CONTENT_DIR'   => __DIR__ . self::DEFAULT['CONTENT_DIR'],
+			'WP_CONTENT_URL'   => 'http://localhost/' . self::DEFAULT['CONTENT_DIR'],
+			'WP_DEFAULT_THEME' => self::DEFAULT['THEME_SLUG'],
+			'ABSPATH'          => __DIR__ . self::DEFAULT['WP_CORE_DIR'],
+		);
 
 		// Limited to what we are getting from the testing environment
 		$this->assertIsString( ABSPATH );

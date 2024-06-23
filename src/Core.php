@@ -39,16 +39,19 @@ class Core {
 
 	protected function __construct( string $base_path ) {
 
+		$public_root = Env::get( 'PUBLIC_ROOT' ) ?? self::DEFAULT['PUBLIC_ROOT'];
+		$wp_core_dir = Env::get( 'WP_CORE_DIR' ) ?? self::DEFAULT['WP_CORE_DIR'];
+
+		$this->public_path = realpath( $this->join_path_parts( $base_path, $public_root ) );
+		$wp_core_real_path = realpath( $this->join_path_parts( $this->public_path, $wp_core_dir ) );
+
+		if ( ! file_exists( $wp_core_real_path . '/wp-blog-header.php' ) ) {
+			throw new Error( 'Specified path is not a valid WordPress installation.' );
+		}
+
 		// Loop all must-haves with our defaults
 		foreach ( $this->get_opinionated_constants() as $constant => $default ) {
 			$this->define( $constant, $default );
-		}
-
-		$public_path = $this->join_path_parts( $base_path, PUBLIC_ROOT );
-		$wp_core_dir = $this->join_path_parts( $public_path, WP_ROOT_DIR );
-
-		if ( ! file_exists( $wp_core_dir . '/wp-blog-header.php' ) ) {
-			throw new Error( 'Specified path is not a valid WordPress installation.' );
 		}
 
 		// Authentication Unique Keys and Salts
@@ -80,7 +83,7 @@ class Core {
 		/**
 		 * Custom Settings
 		 */
-		foreach ( $this->get_custom_constants( $public_path ) as $constant => $default ) {
+		foreach ( $this->get_custom_constants( $wp_core_dir ) as $constant => $default ) {
 			$this->define( $constant, $default );
 		}
 

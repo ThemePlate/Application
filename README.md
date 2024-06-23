@@ -11,7 +11,7 @@ use Env\Env;
 
 require_once 'vendor/autoload.php';
 
-Core::setup( __DIR__ );
+Core::setup( __DIR__ ); // .env location
 
 $application  = new Application();
 $table_prefix = Env::get( 'DB_PREFIX' ) ?: 'wp_';
@@ -21,10 +21,14 @@ require_once ABSPATH . 'wp-settings.php';
 
 ### .env
 ```dotenv
-# WP_HOME='https://themeplate.local'
+## Relative to this .env file
 # PUBLIC_ROOT='public'
-# WP_ROOT_DIR='/wp'
-# CONTENT_DIR='/content'
+
+## Relative to the PUBLIC_ROOT
+# WP_CORE_DIR='wp'
+# CONTENT_DIR='content'
+
+WP_HOME='https://themeplate.local'
 
 # DB_NAME='local'
 # DB_USER='root'
@@ -38,7 +42,7 @@ WP_DEBUG=true
 # WP_DEBUG_LOG='/path/to/debug.log'
 
 # WP_ENVIRONMENT_TYPE='local'
-WP_DEFAULT_THEME='themeplate'
+# WP_DEFAULT_THEME='themeplate'
 
 # DISABLE_WP_CRON=true
 # DISALLOW_FILE_MODS=false

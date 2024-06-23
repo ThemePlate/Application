@@ -21,7 +21,7 @@ class ApplicationTest extends TestCase {
 		$constants = $this->get_opinionated_constants();
 
 		if ( ! defined( 'WP_TESTS_TABLE_PREFIX' ) ) {
-			$constants += $this->get_custom_constants( self::DEFAULT['BASE_PATH'] );
+			$constants += $this->get_custom_constants( __DIR__ );
 		}
 
 		foreach ( $constants as $name => $default ) {

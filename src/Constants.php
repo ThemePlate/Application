@@ -11,13 +11,15 @@ use Env\Env;
 trait Constants {
 
 	public const DEFAULT = array(
-		'BASE_PATH'   => __DIR__,
 		'PUBLIC_ROOT' => 'public',
-		'WP_ROOT_DIR' => '/wp',
-		'CONTENT_DIR' => '/content',
-		'WP_ENV_TYPE' => 'local',
-		'WP_THEME'    => 'themeplate',
+		'WP_CORE_DIR' => 'wp',
+		'CONTENT_DIR' => 'content',
+		'ENVIRONMENT' => 'local',
+		'THEME_SLUG'  => 'themeplate',
 	);
+
+
+	public readonly string $public_path;
 
 
 	protected function get_opinionated_constants(): array {
@@ -34,11 +36,8 @@ trait Constants {
 			'WP_DEBUG_DISPLAY'    => false,
 			'SCRIPT_DEBUG'        => false,
 			'WP_HOME'             => array( $this->targeted_request() ),
-			'PUBLIC_ROOT'         => array( self::DEFAULT['PUBLIC_ROOT'] ),
-			'WP_ROOT_DIR'         => array( self::DEFAULT['WP_ROOT_DIR'] ),
-			'CONTENT_DIR'         => array( self::DEFAULT['CONTENT_DIR'] ),
-			'WP_ENVIRONMENT_TYPE' => self::DEFAULT['WP_ENV_TYPE'],
-			'WP_DEFAULT_THEME'    => array( self::DEFAULT['WP_THEME'] ),
+			'WP_ENVIRONMENT_TYPE' => self::DEFAULT['ENVIRONMENT'],
+			'WP_DEFAULT_THEME'    => array( self::DEFAULT['THEME_SLUG'] ),
 		);
 
 	}
@@ -59,12 +58,14 @@ trait Constants {
 	}
 
 
-	protected function get_custom_constants( string $base_path ): array {
+	protected function get_custom_constants( string $wp_core_dir ): array {
+
+		$content_dir = Env::get( 'CONTENT_DIR' ) ?? self::DEFAULT['CONTENT_DIR'];
 
 		return array(
-			'WP_SITEURL'                 => $this->join_path_parts( WP_HOME, WP_ROOT_DIR ),
-			'WP_CONTENT_DIR'             => $this->join_path_parts( $base_path, CONTENT_DIR ),
-			'WP_CONTENT_URL'             => $this->join_path_parts( WP_HOME, CONTENT_DIR ),
+			'WP_SITEURL'                 => $this->join_path_parts( WP_HOME, $wp_core_dir ),
+			'WP_CONTENT_DIR'             => $this->join_path_parts( $this->public_path, $content_dir ),
+			'WP_CONTENT_URL'             => $this->join_path_parts( WP_HOME, $content_dir ),
 			'AUTOMATIC_UPDATER_DISABLED' => true,
 			'DISABLE_WP_CRON'            => false,
 			'DISALLOW_FILE_EDIT'         => true,
