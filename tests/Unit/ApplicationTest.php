@@ -8,13 +8,13 @@ namespace Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
 use ThemePlate\Application;
-use ThemePlate\Constants;
+use ThemePlate\Application\Constants;
 
 class ApplicationTest extends TestCase {
 	use Constants;
 
 	public static function setUpBeforeClass(): void {
-		( new Application() )->boot( self::$default_base_path );
+		( new Application() )->boot();
 	}
 
 	public function test_default_constant_values_loaded_correctly_even_without_dotenv_file(): void {

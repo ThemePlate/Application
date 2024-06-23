@@ -4,13 +4,14 @@
  * @package ThemePlate
  */
 
-namespace ThemePlate;
+namespace ThemePlate\Application;
 
 use Env\Env;
 
 trait Constants {
 
 	protected static string $default_base_path   = __DIR__;
+	protected static string $default_public_root = 'public';
 	protected static string $default_wp_root_dir = '/wp';
 	protected static string $default_content_dir = '/content';
 	protected static string $default_wp_env_type = 'local';
@@ -31,6 +32,7 @@ trait Constants {
 			'WP_DEBUG_DISPLAY'    => false,
 			'SCRIPT_DEBUG'        => false,
 			'WP_HOME'             => array( $this->targeted_request() ),
+			'PUBLIC_ROOT'         => array( self::$default_public_root ),
 			'WP_ROOT_DIR'         => array( self::$default_wp_root_dir ),
 			'CONTENT_DIR'         => array( self::$default_content_dir ),
 			'WP_ENVIRONMENT_TYPE' => self::$default_wp_env_type,

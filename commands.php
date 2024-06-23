@@ -4,7 +4,7 @@
  * @package ThemePlate
  */
 
-namespace ThemePlate;
+namespace ThemePlate\Application;
 
 use ThemePlate\CLI\CommandRegistry;
 

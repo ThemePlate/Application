@@ -14,7 +14,7 @@ class ApplicationTest extends WP_UnitTestCase {
 	use Constants;
 
 	public static function setUpBeforeClass(): void {
-		( new Application() )->boot( self::$default_base_path );
+		( new Application() )->boot();
 	}
 
 	public function test_defining_standard_constants_are_skipped_if_wordpress_already_bootstrapped(): void {

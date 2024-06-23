@@ -9,9 +9,11 @@
 use ThemePlate\Application;
 use Env\Env;
 
-require_once __DIR__ . '/vendor/autoload.php';
+require_once 'vendor/autoload.php';
 
-$application  = ( new Application() )->boot( __DIR__ );
+Core::setup( __DIR__ );
+
+$application  = new Application();
 $table_prefix = Env::get( 'DB_PREFIX' ) ?: 'wp_';
 
 require_once ABSPATH . 'wp-settings.php';
@@ -20,6 +22,7 @@ require_once ABSPATH . 'wp-settings.php';
 ### .env
 ```dotenv
 # WP_HOME='https://themeplate.local'
+# PUBLIC_ROOT='public'
 # WP_ROOT_DIR='/wp'
 # CONTENT_DIR='/content'
 

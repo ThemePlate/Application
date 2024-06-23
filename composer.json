@@ -32,9 +32,10 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"ThemePlate\\": "src"
+			"ThemePlate\\Application\\": "src"
 		},
 		"files": [
+			"./Application.php",
 			"./commands.php"
 		]
 	},

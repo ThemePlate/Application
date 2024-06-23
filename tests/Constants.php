@@ -6,7 +6,7 @@
 
 namespace Tests;
 
-use ThemePlate\Constants as BaseConstants;
+use ThemePlate\Application\Constants as BaseConstants;
 
 trait Constants {
 	use BaseConstants;

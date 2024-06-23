@@ -4,7 +4,7 @@
  * @package ThemePlate
  */
 
-namespace ThemePlate;
+namespace ThemePlate\Application;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;

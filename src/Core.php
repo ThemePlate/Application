@@ -7,58 +7,48 @@
  * @since   0.1.0
  */
 
-namespace ThemePlate;
+namespace ThemePlate\Application;
 
 use Dotenv\Dotenv;
 use Env\Env;
-use League\Container\Container;
+use Error;
 
-class Application extends Container {
+class Core {
 
 	use Constants;
 
 
-	protected static self $instance;
+	public static function setup( string $env_path ): void {
 
+		if ( defined( 'WPINC' ) ) {
+			throw new Error( 'WordPress is already loaded.' );
+		}
 
-	public static function instance(): Application {
+		if ( '' === $env_path ) {
+			throw new Error( 'Environment path must be specified.' );
+		}
 
-		return self::$instance;
-
-	}
-
-
-	public static function load_env( string $path, string $name = null ): void {
-
-		$dotenv = Dotenv::createImmutable( $path, $name );
-
-		$dotenv->safeLoad();
+		Dotenv::createImmutable( $env_path )->safeLoad();
 
 		Env::$options |= Env::USE_ENV_ARRAY;
 
-	}
-
-
-	public function boot( string $base_path ): Application {
-
-		self::load_env( $base_path );
-
-		if ( ! defined( 'WPINC' ) ) {
-			$this->bootstrap_wordpress( $base_path );
-		}
-
-		self::$instance = $this;
-
-		return $this;
+		new self( $env_path );
 
 	}
 
 
-	protected function bootstrap_wordpress( string $base_path ): void {
+	protected function __construct( string $base_path ) {
 
 		// Loop all must-haves with our defaults
 		foreach ( $this->get_opinionated_constants() as $constant => $default ) {
 			$this->define( $constant, $default );
+		}
+
+		$public_path = $base_path . '/' . PUBLIC_ROOT;
+		$wp_core_dir = $public_path . '/' . WP_ROOT_DIR;
+
+		if ( ! file_exists( $wp_core_dir . '/wp-blog-header.php' ) ) {
+			throw new Error( 'Specified path is not a valid WordPress installation.' );
 		}
 
 		// Authentication Unique Keys and Salts
@@ -90,7 +80,7 @@ class Application extends Container {
 		/**
 		 * Custom Settings
 		 */
-		foreach ( $this->get_custom_constants( $base_path ) as $constant => $default ) {
+		foreach ( $this->get_custom_constants( $public_path ) as $constant => $default ) {
 			$this->define( $constant, $default );
 		}
 
