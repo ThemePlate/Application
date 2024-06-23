@@ -44,8 +44,8 @@ class Core {
 			$this->define( $constant, $default );
 		}
 
-		$public_path = $base_path . '/' . PUBLIC_ROOT;
-		$wp_core_dir = $public_path . '/' . WP_ROOT_DIR;
+		$public_path = $this->join_path_parts( $base_path, PUBLIC_ROOT );
+		$wp_core_dir = $this->join_path_parts( $public_path, WP_ROOT_DIR );
 
 		if ( ! file_exists( $wp_core_dir . '/wp-blog-header.php' ) ) {
 			throw new Error( 'Specified path is not a valid WordPress installation.' );
@@ -88,11 +88,6 @@ class Core {
 
 		if ( file_exists( $local_config ) ) {
 			require_once $local_config;
-		}
-
-		/** Absolute path to the WordPress directory. */
-		if ( ! defined( 'ABSPATH' ) ) {
-			define( 'ABSPATH', $base_path . WP_ROOT_DIR );
 		}
 
 	}

@@ -42,12 +42,27 @@ trait Constants {
 	}
 
 
+	protected function join_path_parts( string ...$args ): string {
+
+		array_walk( $args, function ( string &$part, int $key ) {
+			$part = rtrim( $part, '/\\' );
+
+			if ( $key > 0 ) {
+				$part = ltrim( $part, '/\\' );
+			}
+		} );
+
+		return implode( DIRECTORY_SEPARATOR, array_filter( $args ) );
+
+	}
+
+
 	protected function get_custom_constants( string $base_path ): array {
 
 		return array(
-			'WP_SITEURL'                 => WP_HOME . WP_ROOT_DIR,
-			'WP_CONTENT_DIR'             => $base_path . CONTENT_DIR,
-			'WP_CONTENT_URL'             => WP_HOME . CONTENT_DIR,
+			'WP_SITEURL'                 => $this->join_path_parts( WP_HOME, WP_ROOT_DIR ),
+			'WP_CONTENT_DIR'             => $this->join_path_parts( $base_path, CONTENT_DIR ),
+			'WP_CONTENT_URL'             => $this->join_path_parts( WP_HOME, CONTENT_DIR ),
 			'AUTOMATIC_UPDATER_DISABLED' => true,
 			'DISABLE_WP_CRON'            => false,
 			'DISALLOW_FILE_EDIT'         => true,
