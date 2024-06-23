@@ -10,12 +10,14 @@ use Env\Env;
 
 trait Constants {
 
-	protected static string $default_base_path   = __DIR__;
-	protected static string $default_public_root = 'public';
-	protected static string $default_wp_root_dir = '/wp';
-	protected static string $default_content_dir = '/content';
-	protected static string $default_wp_env_type = 'local';
-	protected static string $default_wp_theme    = 'themeplate';
+	public const DEFAULT = array(
+		'BASE_PATH'   => __DIR__,
+		'PUBLIC_ROOT' => 'public',
+		'WP_ROOT_DIR' => '/wp',
+		'CONTENT_DIR' => '/content',
+		'WP_ENV_TYPE' => 'local',
+		'WP_THEME'    => 'themeplate',
+	);
 
 
 	protected function get_opinionated_constants(): array {
@@ -32,11 +34,11 @@ trait Constants {
 			'WP_DEBUG_DISPLAY'    => false,
 			'SCRIPT_DEBUG'        => false,
 			'WP_HOME'             => array( $this->targeted_request() ),
-			'PUBLIC_ROOT'         => array( self::$default_public_root ),
-			'WP_ROOT_DIR'         => array( self::$default_wp_root_dir ),
-			'CONTENT_DIR'         => array( self::$default_content_dir ),
-			'WP_ENVIRONMENT_TYPE' => self::$default_wp_env_type,
-			'WP_DEFAULT_THEME'    => array( self::$default_wp_theme ),
+			'PUBLIC_ROOT'         => array( self::DEFAULT['PUBLIC_ROOT'] ),
+			'WP_ROOT_DIR'         => array( self::DEFAULT['WP_ROOT_DIR'] ),
+			'CONTENT_DIR'         => array( self::DEFAULT['CONTENT_DIR'] ),
+			'WP_ENVIRONMENT_TYPE' => self::DEFAULT['WP_ENV_TYPE'],
+			'WP_DEFAULT_THEME'    => array( self::DEFAULT['WP_THEME'] ),
 		);
 
 	}
@@ -96,14 +98,9 @@ trait Constants {
 
 
 	/**
-	 * @param string $constant
-	 * @param mixed  $default  (boolean | string)
-	 * If value is an array, the comparison operator
-	 * is switched from 'null-coalescing' to 'ternary'
-	 *
-	 * @return void
+	 * If default value is an array, the comparison operator is switched from 'null-coalescing' to 'ternary'
 	 */
-	protected function define( string $constant, $default ): void {
+	protected function define( string $constant, mixed $default ): void {
 
 		if ( defined( $constant ) && $default === constant( $constant ) ) {
 			return;

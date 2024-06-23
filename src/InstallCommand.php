@@ -60,7 +60,7 @@ class InstallCommand extends Command {
 
 	protected function get_install_path(): string {
 
-		$default  = ltrim( self::$default_wp_root_dir, '/\\' );
+		$default  = ltrim( self::DEFAULT['WP_ROOT_DIR'], '/\\' );
 		$composer = getcwd() . '/composer.json';
 
 		if ( ! file_exists( $composer ) ) {
