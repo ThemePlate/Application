@@ -3,3 +3,4 @@
 .editorconfig export-ignore
 .gitattributes export-ignore
 .gitignore export-ignore
+.ide-helper.php export-ignore
