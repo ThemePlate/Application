@@ -4,3 +4,4 @@
 /vendor/
 /composer.lock
 /wp
+.DS_Store

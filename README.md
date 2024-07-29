@@ -5,8 +5,10 @@
 ### `./vendor/bin/themeplate install`
 
 ### wp-config.php
+
 ```php
 use ThemePlate\Application;
+use ThemePlate\Application\Core;
 use Env\Env;
 
 require_once 'vendor/autoload.php';
@@ -20,6 +22,7 @@ require_once ABSPATH . 'wp-settings.php';
 ```
 
 ### .env
+
 ```dotenv
 ## Relative to this .env file
 # PUBLIC_ROOT='public'
