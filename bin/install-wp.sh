@@ -30,21 +30,23 @@ install_wp() {
 		ARCHIVE_NAME='wordpress-latest'
 		DOWNLOAD_URL="https://wordpress.org/latest.tar.gz"
 	elif [[ $WP_VERSION =~ [0-9]+\.[0-9]+ ]]; then
-		# https serves multiple offers, whereas http serves single.
-		download https://api.wordpress.org/core/version-check/1.7/ $TMPDIR/wp-latest.json
 		if [[ $WP_VERSION =~ [0-9]+\.[0-9]+\.[0] ]]; then
 			# version x.x.0 means the first release of the major version, so strip off the .0 and download version x.x
 			LATEST_VERSION=${WP_VERSION%??}
 		else
+			# https serves multiple offers, whereas http serves single.
+			download https://api.wordpress.org/core/version-check/1.7/ $TMPDIR/wp-latest.json
 			# otherwise, scan the releases and get the most up to date minor version of the major release
 			local VERSION_ESCAPED=`echo $WP_VERSION | sed 's/\./\\\\./g'`
 			LATEST_VERSION=$(grep -o '"version":"'$VERSION_ESCAPED'[^"]*' $TMPDIR/wp-latest.json | sed 's/"version":"//' | head -1)
 		fi
+
 		if [[ -z "$LATEST_VERSION" ]]; then
 			ARCHIVE_NAME="wordpress-$WP_VERSION"
 		else
 			ARCHIVE_NAME="wordpress-$LATEST_VERSION"
 		fi
+
 		DOWNLOAD_URL="https://wordpress.org/${ARCHIVE_NAME}.tar.gz"
 	else
 		ARCHIVE_NAME="wordpress-$WP_VERSION"
