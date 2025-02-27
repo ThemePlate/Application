@@ -7,7 +7,6 @@
 ### wp-config.php
 
 ```php
-use ThemePlate\Application;
 use ThemePlate\Application\Core;
 use Env\Env;
 
@@ -15,7 +14,6 @@ require_once 'vendor/autoload.php';
 
 Core::setup( __DIR__ ); // .env location
 
-$application  = new Application();
 $table_prefix = Env::get( 'DB_PREFIX' ) ?: 'wp_';
 
 require_once ABSPATH . 'wp-settings.php';

@@ -18,12 +18,16 @@ class Application extends Container {
 
 	public static function instance(): Application {
 
+		_deprecated_function( __METHOD__, '2.0.0' );
+
 		return self::$instance;
 
 	}
 
 
 	public function boot(): Application {
+
+		_deprecated_function( __METHOD__, '2.0.0' );
 
 		self::$instance = $this;
 
